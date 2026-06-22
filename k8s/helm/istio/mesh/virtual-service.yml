@@ -1,0 +1,19 @@
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: hello-world
+  namespace: hello-world
+spec:
+  hosts:
+    - "hello-world.local"  # domain that triggers this route
+  gateways:
+    - istio-ingress/main-gateway
+  http:
+    - match:
+        - uri:
+            prefix: /
+      route:
+        - destination:
+            host: hello-world.hello-world.svc.cluster.local
+            port:
+              number: 3040

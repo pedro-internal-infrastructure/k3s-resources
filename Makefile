@@ -8,27 +8,36 @@ HTTPS_PORT    := 30443
 
 .PHONY: install uninstall link unlink port-forward password status deploy-apps remove-apps
 
-install:
-	$(BIN) apply --server-side --force-conflicts -k $(BOOTSTRAP_DIR)
+Logs:
+	mkdir -p logs
 
-uninstall:
-	$(BIN) delete -k $(BOOTSTRAP_DIR) --ignore-not-found
+install: Logs 
+	@echo "Installing ArgoCD in the cluster..."
+	@$(BIN) apply --server-side --force-conflicts -k $(BOOTSTRAP_DIR) > logs/install.log 2>&1 || (echo "Installation failed. Check logs/install.log for details." && exit 1)
+
+uninstall: Logs
+	@echo "Uninstalling ArgoCD from the cluster..."
+	@$(BIN) delete -k $(BOOTSTRAP_DIR) --ignore-not-found
 
 # Apply the root Application — links ArgoCD to the repo (run once after install)
 link:
-	$(BIN) apply -f $(ROOT_APP)
+	@echo "Linking ArgoCD to the repository..."
+	@$(BIN) apply -f $(ROOT_APP)
 
 unlink:
-	$(BIN) delete -f $(ROOT_APP) --ignore-not-found
+	@echo "Unlinking ArgoCD from the repository..."
+	@$(BIN) delete -f $(ROOT_APP) --ignore-not-found
 
-port-forward:
-	$(BIN) port-forward svc/argocd-server -n $(NAMESPACE) 8080:80
+port-forward: Logs
+	@echo "Starting port-forwarding for ArgoCD server..."
+	@$(BIN) port-forward svc/argocd-server -n $(NAMESPACE) 8080:80
 
 password:
 	@$(BIN) get secret argocd-initial-admin-secret -n $(NAMESPACE) \
 		-o jsonpath="{.data.password}" | base64 -d && echo
 
 status:
+
 	$(BIN) get all -n $(NAMESPACE)
 
 # Deploy ArgoCD Application manifests (run after `make install` and ArgoCD is ready)
