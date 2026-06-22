@@ -1,0 +1,37 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: hello-world
+  namespace: argocd
+  # Cascade delete: removing this Application also removes all deployed resources
+  finalizers:
+    - resources-finalizer.argocd.io
+spec:
+  project: default
+
+  # Multi-source: OCI chart + git repo for values
+  sources:
+    # Source 1: Helm chart from OCI registry
+    - repoURL: oci://ghcr.io/triggerdotdev/charts
+      chart: trigger
+      targetRevision: "*"
+      helm:
+        # Pull values from the git source below (referenced via $values)
+        valueFiles:
+          - $values/k8s/helm/hello-world/manifest/Manifest.yml
+
+    # Source 2: Git repo (used only as values reference)
+    - repoURL: https://github.com/pedromota533/kubernetes-intro
+      targetRevision: HEAD
+      ref: values
+
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: hello-world
+
+  syncPolicy:
+    automated:
+      prune: true      # Remove resources deleted from git
+      selfHeal: true   # Revert manual changes in the cluster
+    syncOptions:
+      - CreateNamespace=true
