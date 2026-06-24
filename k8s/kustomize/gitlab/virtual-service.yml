@@ -1,0 +1,19 @@
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: gitlab
+  namespace: gitlab
+spec:
+  hosts:
+    - "localhost"
+  gateways:
+    - istio-ingress/http-gateway
+  http:
+    - match:
+        - uri:
+            prefix: /gitlab
+      route:
+        - destination:
+            host: gitlab.gitlab.svc.cluster.local
+            port:
+              number: 80
