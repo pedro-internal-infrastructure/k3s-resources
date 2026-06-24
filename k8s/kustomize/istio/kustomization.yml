@@ -5,3 +5,4 @@ resources:
 - istiod.yml
 - ingress-gateway.yml
 - gateway-config.yml
+- mongodb.yml
