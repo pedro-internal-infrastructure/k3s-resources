@@ -19,7 +19,7 @@ authenticate: install-argocd-bin
 		echo "$(RED)Error: Could not retrieve ArgoCD password$(NC)"; \
 		exit 1; \
 	fi; \
-	$(ARGOCD_CLI) login localhost:8080 --username admin --password "$$PASSWORD" --insecure --grpc-web; \
+	$(ARGOCD_CLI) login localhost:8443 --username admin --password "$$PASSWORD" --grpc-web; \
 	echo "$(GREEN)Successfully authenticated to ArgoCD$(NC)"
 
 argocd-sync: install-argocd-bin
@@ -29,7 +29,7 @@ argocd-sync: install-argocd-bin
 		exit 1; \
 	fi
 	@echo "$(BLUE)Syncing application: $(APP)...$(NC)"
-	@$(ARGOCD_CLI) app sync $(APP) --server localhost:8080 --insecure --grpc-web
+	@$(ARGOCD_CLI) app sync $(APP) --server localhost:8443 --grpc-web
 	@echo "$(GREEN)Application $(APP) synced successfully$(NC)"
 
 install: Logs
@@ -62,8 +62,8 @@ unlink:
 
 port-forward: Logs
 	@echo "$(BLUE)Starting port-forwarding for ArgoCD server...$(NC)"
-	@echo "  Open: http://localhost:8080"
-	@$(BIN) port-forward svc/argocd-server -n $(NAMESPACE) 8080:80 &> logs/port-forward.log &
+	@echo "  Open: https://localhost:8443"
+	@$(BIN) port-forward svc/argocd-server -n $(NAMESPACE) 8443:443 &> logs/port-forward.log &
 
 password:
 	@$(BIN) get secret argocd-initial-admin-secret -n $(NAMESPACE) \

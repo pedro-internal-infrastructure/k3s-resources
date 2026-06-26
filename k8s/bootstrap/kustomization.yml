@@ -5,5 +5,4 @@ resources:
 - namespace.yml
 - https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
 patches:
-- path: NodePort.yml
-- path: argocd-insecure.yml
+- path: argocd-cm.yml
