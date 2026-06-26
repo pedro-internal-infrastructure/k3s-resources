@@ -1,4 +1,36 @@
-.PHONY: install uninstall link unlink port-forward password status pods deploy-apps remove-apps
+.PHONY: install uninstall link unlink port-forward password status pods deploy-apps remove-apps install-argocd-bin authenticate argocd-sync
+
+install-argocd-bin: Logs
+	@if [ -f "$(ARGOCD_CLI)" ]; then \
+		echo "$(GREEN)ArgoCD CLI already installed at $(ARGOCD_CLI)$(NC)"; \
+	else \
+		echo "$(BLUE)Downloading ArgoCD CLI $(ARGOCD_VERSION)...$(NC)"; \
+		mkdir -p bin; \
+		curl -sSL -o $(ARGOCD_CLI) https://github.com/argoproj/argo-cd/releases/download/$(ARGOCD_VERSION)/argocd-linux-amd64; \
+		chmod +x $(ARGOCD_CLI); \
+		echo "$(GREEN)ArgoCD CLI installed successfully$(NC)"; \
+		$(ARGOCD_CLI) version --client; \
+	fi
+
+authenticate: install-argocd-bin
+	@echo "$(BLUE)Authenticating to ArgoCD...$(NC)"
+	@PASSWORD=$$($(BIN) get secret argocd-initial-admin-secret -n $(NAMESPACE) -o jsonpath="{.data.password}" 2>/dev/null | base64 -d); \
+	if [ -z "$$PASSWORD" ]; then \
+		echo "$(RED)Error: Could not retrieve ArgoCD password$(NC)"; \
+		exit 1; \
+	fi; \
+	$(ARGOCD_CLI) login localhost:8080 --username admin --password "$$PASSWORD" --insecure --grpc-web; \
+	echo "$(GREEN)Successfully authenticated to ArgoCD$(NC)"
+
+argocd-sync: install-argocd-bin
+	@if [ -z "$(APP)" ]; then \
+		echo "$(RED)Error: APP not specified. Usage: make sync APP=<app-name>$(NC)"; \
+		echo "$(YELLOW)Example: make sync APP=istio-base$(NC)"; \
+		exit 1; \
+	fi
+	@echo "$(BLUE)Syncing application: $(APP)...$(NC)"
+	@$(ARGOCD_CLI) app sync $(APP) --server localhost:8080 --insecure --grpc-web
+	@echo "$(GREEN)Application $(APP) synced successfully$(NC)"
 
 install: Logs
 	@echo "$(BLUE)Installing ArgoCD in the cluster...$(NC)"
@@ -36,6 +68,7 @@ port-forward: Logs
 password:
 	@$(BIN) get secret argocd-initial-admin-secret -n $(NAMESPACE) \
 		-o jsonpath="{.data.password}" | base64 -d && echo
+
 
 status:
 	@$(BIN) get all -n $(NAMESPACE)
