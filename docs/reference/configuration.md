@@ -42,6 +42,8 @@ make hosts-add NODE_IP=192.168.1.50
 |-------|----------|----------------------------|---------------------------------------------|
 | 30080 | TCP/HTTP | ArgoCD UI                  | `http://localhost:30080`                    |
 | 80    | TCP/HTTP | Istio ingress gateway      | Accessed via `localhost` or custom hostnames |
+| 53    | TCP/UDP  | AdGuard Home DNS           | `10.1.1.200:53`                             |
+| 443   | TCP/HTTP | AdGuard Home admin UI      | `http://10.1.1.200:443`                     |
 | 8080  | TCP/HTTP | ArgoCD (port-forward only) | `make port-forward` → `http://localhost:8080`|
 
 ### Cluster-Internal Ports
@@ -49,6 +51,7 @@ make hosts-add NODE_IP=192.168.1.50
 | Port  | Service             | DNS name                                            |
 |-------|---------------------|-----------------------------------------------------|
 | 20001 | Kiali               | `kiali.istio-system.svc.cluster.local`              |
+| 3000  | AdGuard Home        | `adguardhome.dns.svc.cluster.local`                 |
 | 80    | ArgoCD Server       | `argocd-server.argocd.svc.cluster.local`            |
 
 ---
@@ -72,6 +75,7 @@ make hosts-add NODE_IP=192.168.1.50
 | ArgoCD         | stable    | `https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml` |
 | Istio          | 1.22.3    | `https://istio-release.storage.googleapis.com/charts` |
 | Kiali          | 2.7.0     | `https://kiali.org/helm-charts`                   |
+| AdGuard Home   | 0.107.52  | `adguard/adguardhome`                             |
 
 ---
 
@@ -85,6 +89,7 @@ Sync waves control the order in which ArgoCD deploys Applications within a singl
 | 2    | `istiod`                 | Requires Istio CRDs                            |
 | 3    | `istio-ingress`          | Requires istiod to be running                  |
 | 4    | `istio-gateway-config`   | Requires ingress gateway pod to exist          |
+| 5    | `dns-server`             | Deploys after ingress and gateway config       |
 
 ---
 
@@ -96,6 +101,7 @@ Defined in `config/domains`:
 |--------------------|-----------------------|-----------------------|
 | `argocd.local`     | `127.0.0.1`           | ArgoCD UI             |
 | `kiali.local`      | `127.0.0.1`           | Kiali dashboard       |
+| `dns.local`        | `127.0.0.1`           | AdGuard Home admin UI |
 
 Add new domains by appending a line to `config/domains`, then run `make hosts-add`.
 

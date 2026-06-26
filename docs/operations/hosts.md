@@ -43,6 +43,7 @@ For each non-comment, non-blank line in `config/domains`, this target adds an en
 ```
 127.0.0.1 triggerdev.local
 127.0.0.1 kiali.local
+127.0.0.1 dns.local
 ```
 
 **Custom NODE_IP:**
@@ -54,6 +55,7 @@ Results in:
 ```
 192.168.1.50 triggerdev.local
 192.168.1.50 kiali.local
+192.168.1.50 dns.local
 ```
 
 Use a custom `NODE_IP` when k3s runs on a VM or remote machine and you need to access services from another host.
@@ -91,6 +93,7 @@ Add lines like:
 ```
 127.0.0.1 kiali.local
 127.0.0.1 triggerdev.local
+127.0.0.1 dns.local
 ```
 
 ---
@@ -103,6 +106,7 @@ With the hosts file updated, you can access services by hostname:
 |--------------------|-------------|----------------------------------------|
 | `kiali.local`      | `NODE_IP`   | Kiali dashboard (via Istio VirtualService) |
 | `triggerdev.local` | `NODE_IP`   | Trigger.dev (if deployed)              |
+| `dns.local`        | `NODE_IP`   | AdGuard Home admin UI (via Istio VirtualService) |
 
 The Istio ingress gateway receives traffic on port 80 and inspects the `Host` header to match VirtualService rules.
 

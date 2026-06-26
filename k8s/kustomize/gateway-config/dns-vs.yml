@@ -1,0 +1,16 @@
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: dns-server
+  namespace: istio-ingress
+spec:
+  hosts:
+    - "dns.local"
+  gateways:
+    - istio-ingress/http-gateway
+  http:
+    - route:
+        - destination:
+            host: adguardhome.dns.svc.cluster.local
+            port:
+              number: 3000

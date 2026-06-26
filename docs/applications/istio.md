@@ -106,6 +106,7 @@ Each application defines its own VirtualService. All reference `istio-ingress/ht
 | `*` (localhost) | prefix `/mongodb-node`   | `mongo-express.mongodb.svc.cluster.local:8081` |
 | `*` (localhost) | (no match, Kiali)        | `kiali.istio-system.svc.cluster.local:20001`   |
 | `kiali.local`   | (any)                    | `kiali.istio-system.svc.cluster.local:20001`   |
+| `dns.local`     | (any)                    | `adguardhome.dns.svc.cluster.local:3000`       |
 
 ---
 

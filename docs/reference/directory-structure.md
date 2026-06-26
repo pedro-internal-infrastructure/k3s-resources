@@ -25,7 +25,8 @@ k3s.install/
 │   │
 │   └── kustomize/                    # All application manifests (managed by ArgoCD)
 │       │
-│       ├── kustomization.yml         # Root kustomize: includes istio/
+│       ├── kustomization.yml         # Root kustomize: includes child ArgoCD apps
+│       ├── dns-server.yml            # App: deploys AdGuard Home DNS server (wave 5)
 │       │
 │       └── istio/                    # Istio service mesh (ArgoCD Applications)
 │           ├── kustomization.yml
@@ -39,7 +40,15 @@ k3s.install/
 │           ├── namespace.yml         # Creates istio-ingress namespace
 │           ├── gateway.yml           # Gateway: http-gateway on ports 80 and 443
 │           ├── kiali-vs.yml          # VirtualService: kiali.local → Kiali
-│           └── argocd-vs.yml         # VirtualService: argocd.local + /argocd → ArgoCD
+│           ├── argocd-vs.yml         # VirtualService: argocd.local + /argocd → ArgoCD
+│           └── dns-vs.yml            # VirtualService: dns.local → AdGuard Home
+│
+│       └── dns-server/               # AdGuard Home Kubernetes manifests
+│           ├── kustomization.yml
+│           ├── namespace.yml         # Creates dns namespace
+│           ├── pvc.yml               # Persistent config and work volumes
+│           ├── deployment.yml        # AdGuard Home deployment
+│           └── service.yml           # DNS and admin UI services
 │
 ├── make/                             # Makefile modules (included by Makefile)
 │   ├── vars.mk                       # All variables (paths, ports, colors)
@@ -66,7 +75,8 @@ k3s.install/
     │   └── argocd.md                 # ArgoCD installation and configuration
     ├── applications/
     │   ├── istio.md                  # Istio service mesh deep dive
-    │   └── observability.md          # Kiali observability
+    │   ├── observability.md          # Kiali observability
+    │   └── dns-server.md             # AdGuard Home DNS server
     ├── operations/
     │   ├── make-targets.md           # All make targets with examples
     │   └── hosts.md                  # /etc/hosts domain management

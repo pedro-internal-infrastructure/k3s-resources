@@ -1,0 +1,40 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: adguardhome
+  namespace: dns
+spec:
+  type: ClusterIP
+  selector:
+    app: adguardhome
+  ports:
+    - name: http-admin
+      port: 3000
+      targetPort: setup-http
+      protocol: TCP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: adguardhome-external
+  namespace: dns
+spec:
+  type: LoadBalancer
+  loadBalancerIP: 10.1.1.200
+  externalIPs:
+    - 10.1.1.200
+  selector:
+    app: adguardhome
+  ports:
+    - name: dns-tcp
+      port: 53
+      targetPort: dns-tcp
+      protocol: TCP
+    - name: dns-udp
+      port: 53
+      targetPort: dns-udp
+      protocol: UDP
+    - name: admin
+      port: 443
+      targetPort: setup-http
+      protocol: TCP

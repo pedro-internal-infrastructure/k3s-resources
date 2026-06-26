@@ -85,6 +85,7 @@ ArgoCD Applications use **sync waves** to control deployment order. This ensures
 | 2    | `istiod`            | Control plane depends on CRDs             |
 | 3    | `istio-ingress`     | Gateway depends on istiod                 |
 | 4    | `istio-gateway-config` | Gateway CRs depend on the gateway pod  |
+| 5    | `dns-server`        | Deploys AdGuard Home after ingress config |
 
 ---
 
@@ -96,6 +97,7 @@ All HTTP traffic enters the cluster through the **Istio Ingress Gateway** on por
 http://argocd.local             → argocd-server.argocd.svc.cluster.local:80
 http://localhost/argocd         → argocd-server.argocd.svc.cluster.local:80
 http://kiali.local              → kiali.istio-system.svc.cluster.local:20001
+http://dns.local                → adguardhome.dns.svc.cluster.local:3000
 ```
 
 ---
@@ -107,6 +109,7 @@ http://kiali.local              → kiali.istio-system.svc.cluster.local:20001
 | `argocd`             | ArgoCD server, repo-server, application-controller |
 | `istio-system`       | istiod, Kiali                                 |
 | `istio-ingress`      | Istio ingress gateway pod, Gateway CR         |
+| `dns`                | AdGuard Home DNS server                       |
 
 ---
 

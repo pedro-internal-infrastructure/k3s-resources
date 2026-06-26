@@ -111,6 +111,18 @@ Kiali is configured with anonymous authentication and has read access to all nam
 
 ---
 
+## DNS Server
+
+**Namespace:** `dns`  
+**Version:** AdGuard Home 0.107.52  
+**Exposed at:** `http://dns.local` or `http://10.1.1.200:443`  
+**DNS endpoint:** `10.1.1.200:53` over TCP and UDP  
+**Managed by:** ArgoCD (sync wave 5)
+
+AdGuard Home provides local DNS resolution and filtering. Its configuration and work directories are persisted with PVCs in the `dns` namespace.
+
+---
+
 ## Next Step
 
 → [k3s Installation](../installation/k3s.md)

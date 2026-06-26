@@ -29,6 +29,7 @@ Complete documentation for the `kubernetes-intro` project — a local Kubernetes
 |---|---|
 | [Istio](applications/istio.md) | Service mesh, ingress gateway, and VirtualService routing |
 | [Observability](applications/observability.md) | Kiali observability and service graph |
+| [DNS Server](applications/dns-server.md) | AdGuard Home DNS service and admin UI |
 
 ### 🔧 Operations
 | Document | Description |
@@ -49,5 +50,6 @@ Complete documentation for the `kubernetes-intro` project — a local Kubernetes
 - **ArgoCD UI (domain):** `http://argocd.local`
 - **ArgoCD UI (path):** `http://localhost/argocd`
 - **Kiali:** `http://kiali.local`
+- **DNS server:** `http://dns.local` or `http://10.1.1.200:443`
 - **Get ArgoCD password:** `make password`
 - **See all make targets:** `make help`

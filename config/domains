@@ -4,3 +4,4 @@
 
 argocd.local        # ArgoCD web UI
 kiali.local         # Kiali — Istio observability dashboard
+dns.local           # AdGuard Home DNS server admin UI
