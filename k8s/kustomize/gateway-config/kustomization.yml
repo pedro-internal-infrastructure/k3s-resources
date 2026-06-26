@@ -4,3 +4,4 @@ resources:
 - namespace.yml
 - gateway.yml
 - kiali-vs.yml
+- argocd-vs.yml

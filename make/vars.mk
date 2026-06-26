@@ -1,4 +1,3 @@
-GITLAB_DIR      := $(HOME)/personal/k3s.install/k8s/kustomize/gitlab
 BOOTSTRAP_DIR   := $(HOME)/personal/k3s.install/k8s/bootstrap
 APPS_DIR        := $(HOME)/personal/k3s.install/k8s/kustomize
 ROOT_APP        := $(BOOTSTRAP_DIR)/root-app.yml
