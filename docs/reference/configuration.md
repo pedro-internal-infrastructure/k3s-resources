@@ -45,9 +45,8 @@ make install BOOTSTRAP_DIR=/opt/k8s/bootstrap
 | Port  | Protocol | Service                    | How to reach                                |
 |-------|----------|----------------------------|---------------------------------------------|
 | 30080 | TCP/HTTP | ArgoCD UI                  | `http://localhost:30080`                    |
-| 80    | TCP/HTTP | Istio ingress gateway      | Accessed via `localhost` or custom hostnames |
+| 80    | TCP/HTTP | Istio ingress gateway      | `http://10.1.1.200`, `http://adguard.local`, or other VirtualService hosts |
 | 53    | TCP/UDP  | AdGuard Home DNS           | `10.1.1.200:53`                             |
-| 443   | TCP/HTTP | AdGuard Home admin UI      | `http://10.1.1.200:443`                     |
 | 8080  | TCP/HTTP | ArgoCD (port-forward only) | `make port-forward` → `http://localhost:8080`|
 
 ### Cluster-Internal Ports
@@ -105,7 +104,7 @@ Defined in `config/domains`:
 |--------------------|-----------------------|-----------------------|
 | `argocd.local`     | `127.0.0.1`           | ArgoCD UI             |
 | `kiali.local`      | `127.0.0.1`           | Kiali dashboard       |
-| `dns.local`        | `127.0.0.1`           | AdGuard Home admin UI |
+| `adguard.local`   | `127.0.0.1`           | AdGuard Home admin UI |
 
 Add new domains by appending a line to `config/domains`, then run `make hosts-add`.
 

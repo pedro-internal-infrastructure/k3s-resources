@@ -41,7 +41,7 @@ k3s-resources/
 │           ├── gateway.yml           # Gateway: http-gateway on ports 80 and 443
 │           ├── kiali-vs.yml          # VirtualService: kiali.local → Kiali
 │           ├── argocd-vs.yml         # VirtualService: argocd.local + /argocd → ArgoCD
-│           └── dns-vs.yml            # VirtualService: dns.local → AdGuard Home
+│           └── dns-vs.yml            # VirtualService: adguard.local → AdGuard Home
 │
 │       └── dns-server/               # AdGuard Home Kubernetes manifests
 │           ├── kustomization.yml

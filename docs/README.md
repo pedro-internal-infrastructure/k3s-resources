@@ -50,6 +50,6 @@ Complete documentation for the `kubernetes-intro` project — a local Kubernetes
 - **ArgoCD UI (domain):** `http://argocd.local`
 - **ArgoCD UI (path):** `http://localhost/argocd`
 - **Kiali:** `http://kiali.local`
-- **DNS server:** `http://dns.local` or `http://10.1.1.200:443`
+- **DNS server:** `http://adguard.local` or `http://10.1.1.200`
 - **Get ArgoCD password:** `make password`
 - **See all make targets:** `make help`

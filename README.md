@@ -96,13 +96,13 @@ Once running, services are available at:
 | ArgoCD        | `http://argocd.local`             | `admin` / see `make password` |
 | ArgoCD (alt)  | `http://localhost/argocd`         | `admin` / see `make password` |
 | Kiali         | `http://kiali.local`              | anonymous              |
-| DNS server    | `http://dns.local` or `http://10.1.1.200:443` | create during AdGuard setup |
+| DNS server    | `http://adguard.local` or `http://10.1.1.200` | create during AdGuard setup |
 
 **Note:** ArgoCD is accessible two ways:
 - Via domain: `http://argocd.local` (requires entry in `/etc/hosts`)
 - Via path: `http://localhost/argocd` (no hosts entry needed)
 
-AdGuard Home provides DNS on `10.1.1.200:53` and the first-run admin UI on `10.1.1.200:443`.
+AdGuard Home provides DNS on `10.1.1.200:53` and the first-run admin UI on `10.1.1.200`.
 
 ---
 

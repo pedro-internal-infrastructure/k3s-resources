@@ -97,7 +97,8 @@ All HTTP traffic enters the cluster through the **Istio Ingress Gateway** on por
 http://argocd.local             → argocd-server.argocd.svc.cluster.local:80
 http://localhost/argocd         → argocd-server.argocd.svc.cluster.local:80
 http://kiali.local              → kiali.istio-system.svc.cluster.local:20001
-http://dns.local                → adguardhome.dns.svc.cluster.local:3000
+http://10.1.1.200              → adguardhome.dns.svc.cluster.local:3000
+http://adguard.local           → adguardhome.dns.svc.cluster.local:3000
 ```
 
 ---
