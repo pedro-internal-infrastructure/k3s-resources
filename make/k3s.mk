@@ -3,7 +3,7 @@
 # Download the k3s binary from GitHub releases.
 k3s-download: Logs
 	@echo "$(BLUE)Downloading k3s $(K3S_RELEASE)...$(NC)"
-	@RELEASE="$(K3S_RELEASE)" bash $(DOWNLOAD_SCRIPT) 2>&1 | tee logs/k3s-download.log
+	@RELEASE="$(K3S_RELEASE)" bash $(DOWNLOAD_SCRIPT) 2>&1 | tee $(LOGS_DIR)/k3s-download.log
 	@echo "$(GREEN)k3s binary ready at $(K3S_BIN).$(NC)"
 
 # Install the systemd service using the local binary (no get.k3s.io).

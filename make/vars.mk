@@ -1,19 +1,21 @@
-BOOTSTRAP_DIR   := $(HOME)/personal/k3s.install/k8s/bootstrap
-APPS_DIR        := $(HOME)/personal/k3s.install/k8s/kustomize
-ROOT_APP        := $(BOOTSTRAP_DIR)/root-app.yml
-DOMAINS_FILE    := $(HOME)/personal/k3s.install/config/domains
-BIN             := k3s kubectl
-ARGOCD_CLI      := ./bin/argocd
-ARGOCD_VERSION  := v2.10.4
-NAMESPACE       := argocd
-HTTP_PORT       := 30080
-HTTPS_PORT      := 30443
+REPO_ROOT       ?= $(abspath $(dir $(lastword $(MAKEFILE_LIST)))/..)
+BOOTSTRAP_DIR   ?= $(REPO_ROOT)/k8s/bootstrap
+APPS_DIR        ?= $(REPO_ROOT)/k8s/kustomize
+ROOT_APP        ?= $(BOOTSTRAP_DIR)/root-app.yml
+DOMAINS_FILE    ?= $(REPO_ROOT)/config/domains
+LOGS_DIR        ?= $(REPO_ROOT)/logs
+BIN             ?= k3s kubectl
+ARGOCD_CLI      ?= $(REPO_ROOT)/bin/argocd
+ARGOCD_VERSION  ?= v2.10.4
+NAMESPACE       ?= argocd
+HTTP_PORT       ?= 30080
+HTTPS_PORT      ?= 30443
 NODE_IP          ?= 127.0.0.1
-K3S_SERVICE      := k3s
+K3S_SERVICE      ?= k3s
 K3S_RELEASE      ?= v1.36.2+k3s1
-K3S_BIN          := /usr/local/bin/k3s
-K3S_SERVICE_FILE := /etc/systemd/system/k3s.service
-DOWNLOAD_SCRIPT  := $(CURDIR)/make/scripts/download.sh
+K3S_BIN          ?= /usr/local/bin/k3s
+K3S_SERVICE_FILE ?= /etc/systemd/system/k3s.service
+DOWNLOAD_SCRIPT  ?= $(REPO_ROOT)/make/scripts/download.sh
 
 # Colors
 GREEN  := \033[0;32m
@@ -25,4 +27,4 @@ BOLD   := \033[1m
 NC     := \033[0m
 
 Logs:
-	@mkdir -p logs
+	@mkdir -p $(LOGS_DIR)

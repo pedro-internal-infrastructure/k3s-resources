@@ -10,12 +10,15 @@ Defined in `make/vars.mk`. All can be overridden on the command line.
 
 | Variable          | Default Value                                              | Description                                      |
 |-------------------|------------------------------------------------------------|--------------------------------------------------|
+| `REPO_ROOT`       | repository root                                            | Absolute path to this checkout                   |
 | `NODE_IP`         | `127.0.0.1`                                                | IP address of the k3s node                       |
-| `BOOTSTRAP_DIR`   | `$HOME/personal/k3s.install/k8s/bootstrap`                 | Path to bootstrap manifests                      |
-| `APPS_DIR`        | `$HOME/personal/k3s.install/k8s/kustomize`                 | Path to app manifests                            |
-| `ROOT_APP`        | `$HOME/personal/k3s.install/k8s/bootstrap/root-app.yml`    | Path to root ArgoCD Application manifest         |
-| `DOMAINS_FILE`    | `$HOME/personal/k3s.install/config/domains`                | Path to domains file                             |
+| `BOOTSTRAP_DIR`   | `$(REPO_ROOT)/k8s/bootstrap`                               | Path to bootstrap manifests                      |
+| `APPS_DIR`        | `$(REPO_ROOT)/k8s/kustomize`                               | Path to app manifests                            |
+| `ROOT_APP`        | `$(BOOTSTRAP_DIR)/root-app.yml`                            | Path to root ArgoCD Application manifest         |
+| `DOMAINS_FILE`    | `$(REPO_ROOT)/config/domains`                              | Path to domains file                             |
+| `LOGS_DIR`        | `$(REPO_ROOT)/logs`                                        | Path for command logs                            |
 | `BIN`             | `k3s kubectl`                                              | kubectl binary to use                            |
+| `ARGOCD_CLI`      | `$(REPO_ROOT)/bin/argocd`                                  | ArgoCD CLI binary path                           |
 | `NAMESPACE`       | `argocd`                                                   | ArgoCD namespace                                 |
 | `HTTP_PORT`       | `30080`                                                    | ArgoCD NodePort HTTP port                        |
 | `HTTPS_PORT`      | `30443`                                                    | ArgoCD NodePort HTTPS port (currently disabled)  |
@@ -30,6 +33,7 @@ Any variable with `?=` assignment can be overridden at the command line:
 ```bash
 make k3s-setup NODE_IP=192.168.1.50
 make hosts-add NODE_IP=192.168.1.50
+make install BOOTSTRAP_DIR=/opt/k8s/bootstrap
 ```
 
 ---

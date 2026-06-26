@@ -1,8 +1,10 @@
 .DEFAULT_GOAL := help
 
-include make/vars.mk
-include make/help.mk
-include make/k3s.mk
-include make/argocd.mk
-include make/hosts.mk
-include make/cleanup.mk
+REPO_ROOT := $(abspath $(dir $(lastword $(MAKEFILE_LIST))))
+
+include $(REPO_ROOT)/make/vars.mk
+include $(REPO_ROOT)/make/help.mk
+include $(REPO_ROOT)/make/k3s.mk
+include $(REPO_ROOT)/make/argocd.mk
+include $(REPO_ROOT)/make/hosts.mk
+include $(REPO_ROOT)/make/cleanup.mk

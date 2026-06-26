@@ -5,7 +5,7 @@ Complete annotated layout of the repository.
 ---
 
 ```
-k3s.install/
+k3s-resources/
 │
 ├── Makefile                          # Entry point — includes all make/ modules
 │

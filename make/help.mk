@@ -18,7 +18,7 @@ help:
 	@printf "  $(CYAN)uninstall$(NC)      Remove ArgoCD and all its Applications\n"
 	@printf "  $(CYAN)link$(NC)           Apply root-app (link ArgoCD to this repo)\n"
 	@printf "  $(CYAN)unlink$(NC)         Delete root-app (unlink ArgoCD from this repo)\n"
-	@printf "  $(CYAN)install-argocd-bin$(NC)  Download ArgoCD CLI binary to ./bin/argocd\n"
+	@printf "  $(CYAN)install-argocd-bin$(NC)  Download ArgoCD CLI binary to $(ARGOCD_CLI)\n"
 	@printf "  $(CYAN)argocd-sync$(NC)    Sync a specific app  (APP=<app-name>)\n"
 	@printf "  $(CYAN)port-forward$(NC)   Forward ArgoCD server to localhost:8080\n"
 	@printf "  $(CYAN)password$(NC)       Print the ArgoCD initial admin password\n"

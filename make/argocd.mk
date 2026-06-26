@@ -5,7 +5,7 @@ install-argocd-bin: Logs
 		echo "$(GREEN)ArgoCD CLI already installed at $(ARGOCD_CLI)$(NC)"; \
 	else \
 		echo "$(BLUE)Downloading ArgoCD CLI $(ARGOCD_VERSION)...$(NC)"; \
-		mkdir -p bin; \
+		mkdir -p $(dir $(ARGOCD_CLI)); \
 		curl -sSL -o $(ARGOCD_CLI) https://github.com/argoproj/argo-cd/releases/download/$(ARGOCD_VERSION)/argocd-linux-amd64; \
 		chmod +x $(ARGOCD_CLI); \
 		echo "$(GREEN)ArgoCD CLI installed successfully$(NC)"; \
@@ -34,8 +34,8 @@ argocd-sync: install-argocd-bin
 
 install: Logs
 	@echo "$(BLUE)Installing ArgoCD in the cluster...$(NC)"
-	@$(BIN) apply --server-side --force-conflicts -k $(BOOTSTRAP_DIR) > logs/install.log 2>&1 \
-		|| (echo "$(RED)Installation failed. Check logs/install.log for details.$(NC)" && exit 1)
+	@$(BIN) apply --server-side --force-conflicts -k $(BOOTSTRAP_DIR) > $(LOGS_DIR)/install.log 2>&1 \
+		|| (echo "$(RED)Installation failed. Check $(LOGS_DIR)/install.log for details.$(NC)" && exit 1)
 	@echo "$(GREEN)ArgoCD installed.$(NC)"
 
 uninstall: Logs
@@ -63,7 +63,7 @@ unlink:
 port-forward: Logs
 	@echo "$(BLUE)Starting port-forwarding for ArgoCD server...$(NC)"
 	@echo "  Open: https://localhost:8443"
-	@$(BIN) port-forward svc/argocd-server -n $(NAMESPACE) 8443:443 &> logs/port-forward.log &
+	@$(BIN) port-forward svc/argocd-server -n $(NAMESPACE) 8443:443 &> $(LOGS_DIR)/port-forward.log &
 
 password:
 	@$(BIN) get secret argocd-initial-admin-secret -n $(NAMESPACE) \

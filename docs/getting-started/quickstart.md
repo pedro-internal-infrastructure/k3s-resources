@@ -7,11 +7,11 @@ This guide walks you through setting up the full stack from scratch on a fresh L
 ## Step 1 — Clone the Repository
 
 ```bash
-git clone https://github.com/pedromota533/kubernetes-intro ~/personal/k3s.install
-cd ~/personal/k3s.install
+git clone https://github.com/pedromota533/kubernetes-intro ~/k3s-resources
+cd ~/k3s-resources
 ```
 
-> The Makefile variables assume the project lives at `$HOME/personal/k3s.install`. If you clone elsewhere, update the path variables in `make/vars.mk`.
+The Makefile derives manifest, config, binary, and log paths from the repository location, so the checkout can live in any directory.
 
 ---
 
